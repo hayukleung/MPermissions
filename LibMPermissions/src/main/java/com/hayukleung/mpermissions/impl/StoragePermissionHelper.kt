@@ -14,6 +14,7 @@ object StoragePermissionHelper : Helper() {
 
     override fun permission(): String {
         return Manifest.permission.WRITE_EXTERNAL_STORAGE
+        // or return Manifest.permission.READ_EXTERNAL_STORAGE
     }
 
     override fun requestCode(): Int {

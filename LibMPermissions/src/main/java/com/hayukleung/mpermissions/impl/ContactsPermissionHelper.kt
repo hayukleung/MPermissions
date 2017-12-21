@@ -14,6 +14,8 @@ object ContactsPermissionHelper : Helper() {
 
     override fun permission(): String {
         return Manifest.permission.READ_CONTACTS
+        // or return Manifest.permission.WRITE_CONTACTS
+        // or return Manifest.permission.GET_ACCOUNTS
     }
 
     override fun requestCode(): Int {

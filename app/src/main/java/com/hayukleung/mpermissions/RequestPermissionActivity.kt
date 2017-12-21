@@ -2,6 +2,8 @@ package com.hayukleung.mpermissions
 
 import android.os.Bundle
 import android.widget.Toast
+import com.hayukleung.mpermissions.impl.CameraPermissionHelper
+import com.hayukleung.mpermissions.impl.PhonePermissionHelper
 import com.hayukleung.mpermissions.impl.StoragePermissionHelper
 
 /**
@@ -16,6 +18,34 @@ open class RequestPermissionActivity : MPsActivity() {
         super.onCreate(savedInstanceState)
         if (!StoragePermissionHelper.checkPermission(this)) {
             StoragePermissionHelper.requestPermissionIfNeed(this, object : Helper.Listener {
+                override fun onPermissionDenied() {
+                    toast("拒绝", Toast.LENGTH_SHORT)
+                }
+
+                override fun onResult(grantResults: IntArray) {
+                    if (!grantResults.isEmpty() && 0 == grantResults[0]) {
+                        toast("同意", Toast.LENGTH_SHORT)
+                    }
+                }
+            })
+        }
+
+        if (!PhonePermissionHelper.checkPermission(this)) {
+            PhonePermissionHelper.requestPermissionIfNeed(this, object : Helper.Listener {
+                override fun onPermissionDenied() {
+                    toast("拒绝", Toast.LENGTH_SHORT)
+                }
+
+                override fun onResult(grantResults: IntArray) {
+                    if (!grantResults.isEmpty() && 0 == grantResults[0]) {
+                        toast("同意", Toast.LENGTH_SHORT)
+                    }
+                }
+            })
+        }
+
+        if (!CameraPermissionHelper.checkPermission(this)) {
+            CameraPermissionHelper.requestPermissionIfNeed(this, object : Helper.Listener {
                 override fun onPermissionDenied() {
                     toast("拒绝", Toast.LENGTH_SHORT)
                 }
