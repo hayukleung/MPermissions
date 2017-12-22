@@ -19,13 +19,11 @@ open class RequestPermissionActivity : MPsActivity() {
         if (!StoragePermissionHelper.checkPermission(this)) {
             StoragePermissionHelper.requestPermissionIfNeed(this, object : Helper.Listener {
                 override fun onPermissionDenied() {
-                    toast("拒绝", Toast.LENGTH_SHORT)
+                    toast("拒绝存储", Toast.LENGTH_SHORT)
                 }
 
-                override fun onResult(grantResults: IntArray) {
-                    if (!grantResults.isEmpty() && 0 == grantResults[0]) {
-                        toast("同意", Toast.LENGTH_SHORT)
-                    }
+                override fun onPermissionGranted() {
+                    toast("同意存储", Toast.LENGTH_SHORT)
                 }
             })
         }
@@ -33,13 +31,11 @@ open class RequestPermissionActivity : MPsActivity() {
         if (!PhonePermissionHelper.checkPermission(this)) {
             PhonePermissionHelper.requestPermissionIfNeed(this, object : Helper.Listener {
                 override fun onPermissionDenied() {
-                    toast("拒绝", Toast.LENGTH_SHORT)
+                    toast("拒绝 Phone", Toast.LENGTH_SHORT)
                 }
 
-                override fun onResult(grantResults: IntArray) {
-                    if (!grantResults.isEmpty() && 0 == grantResults[0]) {
-                        toast("同意", Toast.LENGTH_SHORT)
-                    }
+                override fun onPermissionGranted() {
+                    toast("同意 Phone", Toast.LENGTH_SHORT)
                 }
             })
         }
@@ -47,13 +43,11 @@ open class RequestPermissionActivity : MPsActivity() {
         if (!CameraPermissionHelper.checkPermission(this)) {
             CameraPermissionHelper.requestPermissionIfNeed(this, object : Helper.Listener {
                 override fun onPermissionDenied() {
-                    toast("拒绝", Toast.LENGTH_SHORT)
+                    toast("拒绝相机", Toast.LENGTH_SHORT)
                 }
 
-                override fun onResult(grantResults: IntArray) {
-                    if (!grantResults.isEmpty() && 0 == grantResults[0]) {
-                        toast("同意", Toast.LENGTH_SHORT)
-                    }
+                override fun onPermissionGranted() {
+                    toast("同意相机", Toast.LENGTH_SHORT)
                 }
             })
         }

@@ -14,7 +14,7 @@ abstract class Helper {
 
     interface Listener {
         fun onPermissionDenied()
-        fun onResult(grantResults: IntArray)
+        fun onPermissionGranted()
     }
 
     fun checkPermission(context: Context): Boolean {
@@ -25,12 +25,13 @@ abstract class Helper {
     fun requestPermissionIfNeed(activity: MPsActivity, listener: Listener) {
         if (!checkPermission(activity)) {
 
-            activity.addRequestPermissionsDelegate(object : RequestPermissionsDelegate {
-                override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            activity.addRequestPermissionsDelegate(requestCode(), object : RequestPermissionsDelegate {
+                override fun onRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray) {
                     if (grantResults.isEmpty() || PackageManager.PERMISSION_GRANTED != grantResults[0]) {
                         listener.onPermissionDenied()
+                    } else {
+                        listener.onPermissionGranted()
                     }
-                    listener.onResult(grantResults)
                 }
             })
 

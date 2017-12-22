@@ -8,5 +8,5 @@ package com.hayukleung.mpermissions
  */
 interface RequestPermissionsDelegate {
 
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
+    fun onRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray)
 }

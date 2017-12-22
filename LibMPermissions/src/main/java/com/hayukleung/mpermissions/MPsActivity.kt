@@ -10,17 +10,16 @@ import android.support.v7.app.AppCompatActivity
  */
 open class MPsActivity : AppCompatActivity() {
 
-    private val mRequestPermissionsDelegateList : MutableList<RequestPermissionsDelegate> = ArrayList()
+    private val mRequestPermissionsDelegateMap : MutableMap<Int, RequestPermissionsDelegate> = HashMap()
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        for (requestPermissionsDelegate in mRequestPermissionsDelegateList) {
-            requestPermissionsDelegate.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-        mRequestPermissionsDelegateList.clear()
+        val requestPermissionsDelegate : RequestPermissionsDelegate ?= mRequestPermissionsDelegateMap[requestCode]
+        requestPermissionsDelegate?.onRequestPermissionsResult(permissions, grantResults)
+        mRequestPermissionsDelegateMap.remove(requestCode)
     }
 
-    fun addRequestPermissionsDelegate(requestPermissionsDelegate: RequestPermissionsDelegate) {
-        mRequestPermissionsDelegateList.add(requestPermissionsDelegate)
+    fun addRequestPermissionsDelegate(requestCode: Int, requestPermissionsDelegate: RequestPermissionsDelegate) {
+        mRequestPermissionsDelegateMap.put(requestCode, requestPermissionsDelegate)
     }
 }
