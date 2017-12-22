@@ -3,6 +3,7 @@ package com.hayukleung.mpermissions.impl
 import android.Manifest
 import com.hayukleung.mpermissions.Helper
 import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_SMS
+import com.hayukleung.mpermissions.R
 
 /**
  * MPermissions
@@ -22,5 +23,9 @@ object SMSPermissionHelper : Helper() {
 
     override fun requestCode(): Int {
         return PERMISSION_REQUEST_CODE_SMS
+    }
+
+    override fun permissionRequiredHint(): Int {
+        return R.string.permission_required_sms
     }
 }

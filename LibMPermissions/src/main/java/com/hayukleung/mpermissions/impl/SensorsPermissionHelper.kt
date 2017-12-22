@@ -4,6 +4,7 @@ import android.Manifest
 import android.support.annotation.RequiresApi
 import com.hayukleung.mpermissions.Helper
 import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_SENSORS
+import com.hayukleung.mpermissions.R
 
 /**
  * MPermissions
@@ -20,5 +21,9 @@ object SensorsPermissionHelper : Helper() {
 
     override fun requestCode(): Int {
         return PERMISSION_REQUEST_CODE_SENSORS
+    }
+
+    override fun permissionRequiredHint(): Int {
+        return R.string.permission_required_sensors
     }
 }

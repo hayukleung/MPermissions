@@ -3,6 +3,7 @@ package com.hayukleung.mpermissions.impl
 import android.Manifest
 import com.hayukleung.mpermissions.Helper
 import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_CONTACTS
+import com.hayukleung.mpermissions.R
 
 /**
  * MPermissions
@@ -20,5 +21,9 @@ object ContactsPermissionHelper : Helper() {
 
     override fun requestCode(): Int {
         return PERMISSION_REQUEST_CODE_CONTACTS
+    }
+
+    override fun permissionRequiredHint(): Int {
+        return R.string.permission_required_contacts
     }
 }

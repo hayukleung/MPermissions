@@ -3,6 +3,7 @@ package com.hayukleung.mpermissions.impl
 import android.Manifest
 import com.hayukleung.mpermissions.Helper
 import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_MICROPHONE
+import com.hayukleung.mpermissions.R
 
 /**
  * MPermissions
@@ -18,5 +19,9 @@ object MicrophonePermissionHelper : Helper() {
 
     override fun requestCode(): Int {
         return PERMISSION_REQUEST_CODE_MICROPHONE
+    }
+
+    override fun permissionRequiredHint(): Int {
+        return R.string.permission_required_microphone
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_required_calendar">日历权限是必需的，前往设置页赋予 APP 日历权限</string>
+    <string name="permission_required_camera">相机权限是必需的，前往设置页赋予 APP 相机权限</string>
+    <string name="permission_required_contacts">通信录权限是必需的，前往设置页赋予 APP 通信录权限</string>
+    <string name="permission_required_location">位置权限是必需的，前往设置页赋予 APP 位置权限</string>
+    <string name="permission_required_microphone">麦克风权限是必需的，前往设置页赋予 APP 麦克风权限</string>
+    <string name="permission_required_phone">手机状态权限是必需的，前往设置页赋予 APP 手机状态权限</string>
+    <string name="permission_required_sensors">传感器权限是必需的，前往设置页赋予 APP 传感器权限</string>
+    <string name="permission_required_sms">短信权限是必需的，前往设置页赋予 APP 短信权限</string>
+    <string name="permission_required_storage">存储权限是必需的，前往设置页赋予 APP 存储权限</string>
+</resources>
