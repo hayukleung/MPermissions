@@ -1,5 +1,6 @@
 package com.hayukleung.mpermissions
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -35,7 +36,7 @@ abstract class Helper {
                     listener.onPermissionDenied()
                     if (!shouldShowRequestPermissionRationale(activity)) {
                         // 说明用户勾选了不再提示
-                        // FIXME showMustGrantDialog(activity, packageName)
+                        showMustGrantDialog(activity, packageName)
                     }
                 } else {
                     listener.onPermissionGranted()
@@ -50,6 +51,9 @@ abstract class Helper {
         return ActivityCompat.shouldShowRequestPermissionRationale(activity, permission())
     }
 
+    /**
+     * TODO requestCode 回调
+     */
     private fun goSettings(activity: MPsActivity, packageName: String) {
         val localIntent = Intent()
         localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -81,8 +85,53 @@ abstract class Helper {
         }
     }
 
+    /**
+     * @see Manifest.permission.READ_CALENDAR
+     * @see Manifest.permission.WRITE_CALENDAR
+     *
+     * @see Manifest.permission.CAMERA
+     *
+     * @see Manifest.permission.READ_CONTACTS
+     * @see Manifest.permission.WRITE_CONTACTS
+     * @see Manifest.permission.GET_ACCOUNTS
+     *
+     * @see Manifest.permission.ACCESS_FINE_LOCATION
+     * @see Manifest.permission.ACCESS_COARSE_LOCATION
+     *
+     * @see Manifest.permission.RECORD_AUDIO
+     *
+     * @see Manifest.permission.READ_PHONE_STATE
+     * @see Manifest.permission.CALL_PHONE
+     * @see Manifest.permission.READ_CALL_LOG
+     * @see Manifest.permission.WRITE_CALL_LOG
+     * @see Manifest.permission.ADD_VOICEMAIL
+     * @see Manifest.permission.USE_SIP
+     * @see Manifest.permission.PROCESS_OUTGOING_CALLS
+     *
+     * @see Manifest.permission.BODY_SENSORS
+     *
+     * @see Manifest.permission.SEND_SMS
+     * @see Manifest.permission.RECEIVE_SMS
+     * @see Manifest.permission.READ_SMS
+     * @see Manifest.permission.RECEIVE_WAP_PUSH
+     * @see Manifest.permission.RECEIVE_MMS
+     *
+     * @see Manifest.permission.WRITE_EXTERNAL_STORAGE
+     * @see Manifest.permission.READ_EXTERNAL_STORAGE
+     */
     protected abstract fun permission(): String
 
+    /**
+     * @see PERMISSION_REQUEST_CODE_CALENDAR
+     * @see PERMISSION_REQUEST_CODE_CAMERA
+     * @see PERMISSION_REQUEST_CODE_CONTACTS
+     * @see PERMISSION_REQUEST_CODE_LOCATION
+     * @see PERMISSION_REQUEST_CODE_MICROPHONE
+     * @see PERMISSION_REQUEST_CODE_PHONE
+     * @see PERMISSION_REQUEST_CODE_SENSORS
+     * @see PERMISSION_REQUEST_CODE_SMS
+     * @see PERMISSION_REQUEST_CODE_STORAGE
+     */
     protected abstract fun requestCode(): Int
 
     @StringRes
