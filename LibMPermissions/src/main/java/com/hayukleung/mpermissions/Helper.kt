@@ -33,10 +33,12 @@ abstract class Helper {
         activity.addRequestPermissionsDelegate(requestCode(), object : RequestPermissionsDelegate {
             override fun onRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray) {
                 if (grantResults.isEmpty() || PackageManager.PERMISSION_GRANTED != grantResults[0]) {
-                    listener.onPermissionDenied()
                     if (!shouldShowRequestPermissionRationale(activity)) {
                         // 说明用户勾选了不再提示
-                        showMustGrantDialog(activity, packageName)
+                        showMustGrantDialog(activity, packageName, listener)
+                    } else {
+                        // 首次拒绝或未勾选不再提示的拒绝
+                        listener.onPermissionDenied()
                     }
                 } else {
                     listener.onPermissionGranted()
@@ -52,22 +54,23 @@ abstract class Helper {
     }
 
     /**
-     * TODO requestCode 回调
+     * 跳转系统设置
      */
     private fun goSettings(activity: MPsActivity, packageName: String) {
         val localIntent = Intent()
-        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        // localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         localIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
         localIntent.data = Uri.fromParts("package", packageName, null)
-        activity.startActivity(localIntent)
+        activity.startActivityForResult(localIntent, REQUEST_CODE_SETTING)
     }
 
-    private fun showMustGrantDialog(activity: MPsActivity, packageName: String) {
+    private fun showMustGrantDialog(activity: MPsActivity, packageName: String, listener: Listener) {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         builder.setTitle("APP 怒了")
         builder.setMessage(permissionRequiredHint())
         builder.setNegativeButton("残忍拒绝") { dialog, which ->
+            listener.onPermissionDenied()
             dialog.dismiss()
         }
         builder.setPositiveButton("欣然同意") { dialog, which ->

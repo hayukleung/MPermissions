@@ -13,6 +13,14 @@ class RequestPermissionActivity : MPsActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkPermissions()
+    }
+
+    override fun onSettingReturn() {
+        checkPermissions()
+    }
+
+    private fun checkPermissions() {
         StoragePermissionHelper.requestPermissionIfNeed(this, packageName, object : Helper.Listener {
             override fun onPermissionDenied() {
                 toast("拒绝存储")

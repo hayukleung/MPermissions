@@ -1,5 +1,6 @@
 package com.hayukleung.mpermissions
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 
 /**
@@ -8,9 +9,13 @@ import android.support.v7.app.AppCompatActivity
  * liangxiaxu@aobi.com
  * 2017-12-21 15:45
  */
-open class MPsActivity : AppCompatActivity() {
+abstract class MPsActivity : AppCompatActivity() {
 
     private val mRequestPermissionsDelegateMap : MutableMap<Int, RequestPermissionsDelegate> = HashMap()
+
+    fun addRequestPermissionsDelegate(requestCode: Int, requestPermissionsDelegate: RequestPermissionsDelegate) {
+        mRequestPermissionsDelegateMap.put(requestCode, requestPermissionsDelegate)
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -19,7 +24,17 @@ open class MPsActivity : AppCompatActivity() {
         mRequestPermissionsDelegateMap.remove(requestCode)
     }
 
-    fun addRequestPermissionsDelegate(requestCode: Int, requestPermissionsDelegate: RequestPermissionsDelegate) {
-        mRequestPermissionsDelegateMap.put(requestCode, requestPermissionsDelegate)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_SETTING -> {
+                onSettingReturn()
+            }
+        }
     }
+
+    /**
+     * 从设置页返回
+     */
+    abstract fun onSettingReturn()
 }
