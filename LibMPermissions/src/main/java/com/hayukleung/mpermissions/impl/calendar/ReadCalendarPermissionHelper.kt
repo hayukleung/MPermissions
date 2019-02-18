@@ -1,8 +1,8 @@
-package com.hayukleung.mpermissions.impl
+package com.hayukleung.mpermissions.impl.calendar
 
 import android.Manifest
 import com.hayukleung.mpermissions.Helper
-import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_CALENDAR
+import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_READ_CALENDAR
 import com.hayukleung.mpermissions.R
 
 /**
@@ -11,15 +11,14 @@ import com.hayukleung.mpermissions.R
  * liangxiaxu@aobi.com
  * 2017-12-21 17:54
  */
-object CalendarPermissionHelper : Helper() {
+class ReadCalendarPermissionHelper : Helper() {
 
     override fun permission(): String {
         return Manifest.permission.READ_CALENDAR
-        // or return Manifest.permission.WRITE_CALENDAR
     }
 
     override fun requestCode(): Int {
-        return PERMISSION_REQUEST_CODE_CALENDAR
+        return PERMISSION_REQUEST_CODE_READ_CALENDAR
     }
 
     override fun permissionRequiredHint(): Int {

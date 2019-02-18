@@ -1,7 +1,7 @@
 package com.hayukleung.mpermissions
 
 import android.os.Bundle
-import com.hayukleung.mpermissions.impl.StoragePermissionHelper
+import com.hayukleung.mpermissions.impl.storage.ReadExternalStoragePermissionHelper
 
 /**
  * MPermissions
@@ -21,7 +21,7 @@ class RequestPermissionActivity : MPsActivity() {
     }
 
     private fun checkPermissions() {
-        StoragePermissionHelper.requestPermissionIfNeed(this, packageName, object : Helper.Listener {
+        ReadExternalStoragePermissionHelper().requestPermissionIfNeed(this, packageName, object : Helper.Listener {
             override fun onPermissionDenied() {
                 toast("拒绝存储")
             }

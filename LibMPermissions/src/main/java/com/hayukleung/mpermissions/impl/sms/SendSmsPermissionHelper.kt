@@ -1,8 +1,8 @@
-package com.hayukleung.mpermissions.impl
+package com.hayukleung.mpermissions.impl.sms
 
 import android.Manifest
 import com.hayukleung.mpermissions.Helper
-import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_SMS
+import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_SEND_SMS
 import com.hayukleung.mpermissions.R
 
 /**
@@ -11,7 +11,7 @@ import com.hayukleung.mpermissions.R
  * liangxiaxu@aobi.com
  * 2017-12-21 17:54
  */
-object SMSPermissionHelper : Helper() {
+class SendSmsPermissionHelper : Helper() {
 
     override fun permission(): String {
         return Manifest.permission.SEND_SMS
@@ -22,7 +22,7 @@ object SMSPermissionHelper : Helper() {
     }
 
     override fun requestCode(): Int {
-        return PERMISSION_REQUEST_CODE_SMS
+        return PERMISSION_REQUEST_CODE_SEND_SMS
     }
 
     override fun permissionRequiredHint(): Int {

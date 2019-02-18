@@ -1,8 +1,8 @@
-package com.hayukleung.mpermissions.impl
+package com.hayukleung.mpermissions.impl.phone
 
 import android.Manifest
 import com.hayukleung.mpermissions.Helper
-import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_MICROPHONE
+import com.hayukleung.mpermissions.PERMISSION_REQUEST_CODE_WRITE_CALL_LOG
 import com.hayukleung.mpermissions.R
 
 /**
@@ -11,17 +11,17 @@ import com.hayukleung.mpermissions.R
  * liangxiaxu@aobi.com
  * 2017-12-21 17:54
  */
-class MicrophonePermissionHelper : Helper() {
+class WriteCallLogPermissionHelper : Helper() {
 
     override fun permission(): String {
-        return Manifest.permission.RECORD_AUDIO
+        return Manifest.permission.WRITE_CALL_LOG
     }
 
     override fun requestCode(): Int {
-        return PERMISSION_REQUEST_CODE_MICROPHONE
+        return PERMISSION_REQUEST_CODE_WRITE_CALL_LOG
     }
 
     override fun permissionRequiredHint(): Int {
-        return R.string.permission_required_microphone
+        return R.string.permission_required_phone
     }
 }

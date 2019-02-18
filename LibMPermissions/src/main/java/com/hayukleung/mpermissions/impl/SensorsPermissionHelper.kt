@@ -13,7 +13,7 @@ import com.hayukleung.mpermissions.R
  * 2017-12-21 17:54
  */
 @RequiresApi(20)
-object SensorsPermissionHelper : Helper() {
+class SensorsPermissionHelper : Helper() {
 
     override fun permission(): String {
         return Manifest.permission.BODY_SENSORS

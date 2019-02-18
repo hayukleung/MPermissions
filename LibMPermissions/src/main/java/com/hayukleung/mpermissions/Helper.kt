@@ -3,9 +3,12 @@ package com.hayukleung.mpermissions
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
+import android.os.Looper
 import android.support.annotation.StringRes
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
@@ -24,18 +27,34 @@ abstract class Helper {
         fun onPermissionGranted()
     }
 
-    private fun checkSelfPermission(context: Context): Boolean {
+    fun requestPermissionIfNeed(activity: MPsActivity, packageName: String, listener: Listener) {
+        requestPermissionIfNeed(activity, packageName, listener, true)
+    }
+
+    fun requestPermissionIfNeed(activity: MPsActivity, packageName: String, listener: Listener, showMustGrantDialog: Boolean) {
+        if (!checkSelfPermission(activity)) {
+            requestPermission(activity, packageName, listener, showMustGrantDialog)
+        } else {
+            listener.onPermissionGranted()
+        }
+    }
+
+    fun checkSelfPermission(context: Context): Boolean {
         val result = ActivityCompat.checkSelfPermission(context, permission())
         return PackageManager.PERMISSION_GRANTED == result
     }
 
-    private fun requestPermission(activity: MPsActivity, packageName: String, listener: Listener) {
+    private fun requestPermission(activity: MPsActivity, packageName: String, listener: Listener, showMustGrantDialog: Boolean) {
         activity.addRequestPermissionsDelegate(requestCode(), object : RequestPermissionsDelegate {
             override fun onRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray) {
                 if (grantResults.isEmpty() || PackageManager.PERMISSION_GRANTED != grantResults[0]) {
                     if (!shouldShowRequestPermissionRationale(activity)) {
                         // 说明用户勾选了不再提示
-                        showMustGrantDialog(activity, packageName, listener)
+                        if (showMustGrantDialog) {
+                            showMustGrantDialog(activity, packageName, listener)
+                        } else {
+                            listener.onPermissionDenied()
+                        }
                     } else {
                         // 首次拒绝或未勾选不再提示的拒绝
                         listener.onPermissionDenied()
@@ -53,21 +72,14 @@ abstract class Helper {
         return ActivityCompat.shouldShowRequestPermissionRationale(activity, permission())
     }
 
-    /**
-     * 跳转系统设置
-     */
-    private fun goSettings(activity: MPsActivity, packageName: String) {
-        val localIntent = Intent()
-        // localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        localIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
-        localIntent.data = Uri.fromParts("package", packageName, null)
-        activity.startActivityForResult(localIntent, REQUEST_CODE_SETTING)
-    }
-
     private fun showMustGrantDialog(activity: MPsActivity, packageName: String, listener: Listener) {
 
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            return
+        }
+
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        builder.setTitle("APP 怒了")
+        builder.setTitle("APP 获取权限失败")
         builder.setMessage(permissionRequiredHint())
         builder.setNegativeButton("残忍拒绝") { dialog, which ->
             listener.onPermissionDenied()
@@ -77,15 +89,23 @@ abstract class Helper {
             goSettings(activity, packageName)
             dialog.dismiss()
         }
-        builder.create().show()
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+        // https://blog.csdn.net/sj617913246/article/details/73692998
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLUE)
     }
 
-    fun requestPermissionIfNeed(activity: MPsActivity, packageName: String, listener: Listener) {
-        if (!checkSelfPermission(activity)) {
-            requestPermission(activity, packageName, listener)
-        } else {
-            listener.onPermissionGranted()
-        }
+    /**
+     * 跳转系统设置
+     */
+    private fun goSettings(activity: MPsActivity, packageName: String) {
+        val localIntent = Intent()
+        // localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        localIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
+        localIntent.data = Uri.fromParts("package", packageName, null)
+        activity.startActivityForResult(localIntent, REQUEST_CODE_SETTING)
     }
 
     /**
